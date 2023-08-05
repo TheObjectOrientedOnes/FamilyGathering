@@ -45,3 +45,7 @@ src/main/resources/application.properties
 
 #for IDE
 .idea
+
+application.properties
+
+/application.properties
