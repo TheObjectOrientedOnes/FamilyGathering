@@ -39,5 +39,7 @@ out/
 # for application properties i.e. not the password for jdbc
 /src/main/resources/application.properties
 
+/src/main/resources/application.properties
+
 #for IDE
 .idea
