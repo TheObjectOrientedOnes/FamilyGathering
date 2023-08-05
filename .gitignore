@@ -41,5 +41,7 @@ out/
 
 /src/main/resources/application.properties
 
+src/main/resources/application.properties
+
 #for IDE
 .idea
