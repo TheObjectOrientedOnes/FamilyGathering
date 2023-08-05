@@ -35,3 +35,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# for application properties i.e. not the password for jdbc
+/src/main/resources/application.properties
+
+#for IDE
+.idea
