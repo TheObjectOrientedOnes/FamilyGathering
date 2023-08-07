@@ -1,17 +1,19 @@
-# FamilyGathering2
-
-## Set Up
-ensure application.properties file is set up befire running project 
-spring.datasource.url = jdbc:postgresql://localhost:5432/<ServerName>
-spring.datasource.username=<username>
-spring.datasource.password=<password>
-spring.jpa.hibernate.ddl-auto=update
- `#`spring.jpa.hibernate.ddl-auto=create
-
-code below will allow tomcat to give you it's own errors
-server.error.whitelabel.enabled=false
-
-Code below for enabling PUT and Delete Mapping
-spring.mvc.hiddenmethod.filter.enabled=true
-
-- Testing Branch Protection
+# Family Gathering
+Code Fellows Java 401 Mid-term Project
+## Team Members:
+- Nick Brown
+- Ryan Gosselin
+- Kyle Knight
+- Juan Olmedo
+## Project Overview
+This project addresses the issue of over complex family applications that lead to confusion. On our webpage a family memeber will be greeted with a login or sign-up option.
+They will then be directed to their User Page where they can see what events they are signed up for, as well as request access to their Family Gathering Page. The Admin of the family can approve or deny their request to see the Family Page. If approved the User will have access to the Family Page to view events or news that is shared.
+A list of features include:
+- User Login
+- User Signup
+- Personal User Page
+- Admin Page
+- Admin Approve/Deny Feature
+- Central Family Gathering Page
+- Posting to Family Gathering Page
+- Event Sign up on Family Gathering Page
