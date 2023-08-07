@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/family.css">
+    <title th:text="${family.title}">Add Event</title>
+</head>
+</head>
+<body>
+  <div class="form-container">
+    <form th:action="@{'/add-event/' + ${family.id}}" method="POST" class="row g-3">
+        <div class="col-md-6">
+            <label for="inputFamily" class="form-label">Family Name</label>
+            <input type="text" class="form-control" id="inputFamily" name="family" th:value="${family.title}">
+        </div>
+        <div class="col-md-6">
+            <label for="inputTitle" class="form-label">Event Title</label>
+            <input type="text" class="form-control" id="inputTitle" name="title">
+        </div>
+        <div class="col-md-6">
+            <label for="inputLength" class="form-label">Event Length in Hours</label>
+            <input type="text" class="form-control" id="inputLength" name="length">
+        </div>
+        <div class="col-12">
+            <label for="inputLocation" class="form-label">Location</label>
+            <input type="text" class="form-control" id="inputLocation" name="trackLocation">
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-dark">Submit</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
