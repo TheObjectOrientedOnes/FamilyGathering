@@ -1,4 +1,4 @@
-package com.familyGathering.models;
+package com.familyGathering.familyGathering.models;
 
 import jakarta.persistence.*;
 
@@ -13,9 +13,6 @@ public abstract class StaticUserModel {
     String surname;
     String userName;
     Integer age;
-
-    @ManyToOne
-    FamilyMemberModel myFamily;
 
 
     public StaticUserModel() {
