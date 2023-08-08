@@ -1,4 +1,4 @@
-package com.familyGathering.models;
+package com.familyGathering.familyGathering.models;
 
 import jakarta.persistence.*;
 
@@ -13,7 +13,7 @@ public class FamilyModel {
     String familyName;
     int zipcode;
 
-    @OneToMany(mappedBy = "eventToFamily",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "family",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     List<EventModel> familyEvents;
 
     @OneToMany(mappedBy = "myFamily", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

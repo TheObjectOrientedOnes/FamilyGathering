@@ -1,4 +1,4 @@
-package com.familyGathering.models;
+package com.familyGathering.familyGathering.models;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,12 +10,14 @@ import java.util.Collection;
 public class FamilyMemberModel extends StaticUserModel implements UserDetails {
 
     // Need a Family Member Id as well
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long memberId;
 
     @ManyToOne
-    public FamilyModel myfamily;
+    public FamilyModel myFamily;
+
+    //Many to many relationship between family member and the events they are attending
 
     public FamilyMemberModel() {
         super();
@@ -27,9 +29,9 @@ public class FamilyMemberModel extends StaticUserModel implements UserDetails {
         this.memberId = memberId;
     }
 
-    public FamilyMemberModel(String fName, String lName, String surname, String userName, Integer age, FamilyModel myfamily) {
+    public FamilyMemberModel(String fName, String lName, String surname, String userName, Integer age, FamilyModel myFamily) {
         super(fName, lName, surname, userName, age);
-        this.myfamily = myfamily;
+        this.myFamily = myFamily;
 
     }
 

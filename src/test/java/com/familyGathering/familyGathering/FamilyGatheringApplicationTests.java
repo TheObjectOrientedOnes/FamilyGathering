@@ -1,4 +1,4 @@
-package com.familyGathering.FamilyGathering;
+package com.familyGathering.familyGathering;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

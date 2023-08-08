@@ -1,4 +1,4 @@
-package com.familyGathering.FamilyGathering;
+package com.familyGathering.familyGathering;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

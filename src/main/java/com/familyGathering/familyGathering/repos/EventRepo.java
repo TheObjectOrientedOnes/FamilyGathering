@@ -1,6 +1,6 @@
-package com.familyGathering.repos;
+package com.familyGathering.familyGathering.repos;
 
-import com.familyGathering.models.EventModel;
+import com.familyGathering.familyGathering.models.EventModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EventRepo extends JpaRepository<EventModel,Long> {
