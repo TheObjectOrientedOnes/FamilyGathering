@@ -92,7 +92,6 @@ public class MainController {
     }
 
     @GetMapping("/logout")
-
     public RedirectView logout(HttpServletRequest request){
         HttpSession session = request.getSession();
         session.invalidate();
