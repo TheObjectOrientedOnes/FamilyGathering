@@ -5,59 +5,77 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-public class FamilyMemberModel extends StaticUserModel implements UserDetails {
+public class FamilyMemberModel implements UserDetails {
 
-    // Need a Family Member Id as well
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long memberId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long memberId;
+    protected String fName;
+    protected String lName;
+    protected String surname;
+    protected String userName;
+    protected Integer age;
+    protected String password;
+
+    //Generate Constructor
+
+    protected FamilyMemberModel(){};
+
+    public FamilyMemberModel(String fName, String lName, String surname, String userName, Integer age) {
+        this.fName = fName;
+        this.lName = lName;
+        this.surname = surname;
+        this.userName = userName;
+        this.age = age;
+        this.myFamily = null;
+        this.myFamilyEvents = new HashSet<>();
+    }
 
     @ManyToOne
     public FamilyModel myFamily;
 
-    //Many to many relationship between family member and the events they are attending
+    //Many-to-many relationship between family member and the events they are attending
+    @ManyToMany(mappedBy = "eventAttendees")
+    Set<EventModel> myFamilyEvents = new HashSet<>();
 
-    public FamilyMemberModel() {
-        super();
-    }
-
-    //Generate Constructor
-
-    public FamilyMemberModel(Long memberId) {
-        this.memberId = memberId;
-    }
-
-    public FamilyMemberModel(String fName, String lName, String surname, String userName, Integer age, FamilyModel myFamily) {
-        super(fName, lName, surname, userName, age);
-        this.myFamily = myFamily;
-
-    }
+    //Chat GPT Helper Methods
+//    public void addEvent(EventModel event) {
+//        myFamilyEvents.add(event);
+//        event.getEventAttendees().add(this);
+//    }
+//
+//    public void removeEvent(EventModel event) {
+//        myFamilyEvents.remove(event);
+//        event.getEventAttendees().remove(this);
+//    }
 
 
     //Generate Getters and Setters
+
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
 
     public Long getMemberId() {
         return memberId;
     }
 
-
-    //Generate ToString Overide IF WE GET STACKOVERFLOW ERRORS CHECK HERE
-
-
-    @Override
-    public String toString() {
-        return "FamilyMemberModel{" +
-                "memberId=" + memberId +
-                ", familyId=" + familyId +
-                ", fName='" + fName + '\'' +
-                ", lName='" + lName + '\'' +
-                ", surname='" + surname + '\'' +
-                ", userName='" + userName + '\'' +
-                ", age=" + age +
-                '}';
+    public Set<EventModel> getMyFamilyEvents() {
+        return myFamilyEvents;
     }
+
+    public void setMyFamilyEvents(Set<EventModel> myFamilyEvents) {
+        this.myFamilyEvents = myFamilyEvents;
+    }
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -66,7 +84,7 @@ public class FamilyMemberModel extends StaticUserModel implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return this.password;
     }
 
     @Override

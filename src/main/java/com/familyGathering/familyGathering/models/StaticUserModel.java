@@ -7,12 +7,12 @@ public abstract class StaticUserModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long familyId;
-    String fName;
-    String lName;
-    String surname;
-    String userName;
-    Integer age;
+    protected Long familyId;
+    protected String fName;
+    protected String lName;
+    protected String surname;
+    protected String userName;
+    protected Integer age;
 
 
     public StaticUserModel() {
@@ -36,19 +36,19 @@ public abstract class StaticUserModel {
         return familyId;
     }
 
-    public String getfName() {
+    public String getFName() {
         return fName;
     }
 
-    public void setfName(String fName) {
+    public void setFName(String fName) {
         this.fName = fName;
     }
 
-    public String getlName() {
+    public String getLName() {
         return lName;
     }
 
-    public void setlName(String lName) {
+    public void setLName(String lName) {
         this.lName = lName;
     }
 
