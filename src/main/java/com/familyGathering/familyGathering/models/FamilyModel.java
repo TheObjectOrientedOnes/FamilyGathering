@@ -2,6 +2,7 @@ package com.familyGathering.familyGathering.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,6 +19,14 @@ public class FamilyModel {
 
     @OneToMany(mappedBy = "myFamily", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<FamilyMemberModel> familyMembers;
+
+    protected FamilyModel(){};
+
+    public FamilyModel(String familyName) {
+        this.familyName = familyName;
+        this.familyEvents = new ArrayList<>();
+        this.familyMembers = new ArrayList<>();
+    }
 
     public Long getFamilyIdId() {
         return familyId;
@@ -65,5 +74,9 @@ public class FamilyModel {
 
     public void setFamilyMembers(List<FamilyMemberModel> familyMembers) {
         this.familyMembers = familyMembers;
+    }
+
+    public void setFamilyMember(FamilyMemberModel familyMember){
+        this.familyMembers.add(familyMember);
     }
 }

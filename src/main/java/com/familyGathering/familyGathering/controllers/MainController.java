@@ -1,6 +1,7 @@
 package com.familyGathering.familyGathering.controllers;
 
 import com.familyGathering.familyGathering.models.FamilyMemberModel;
+import com.familyGathering.familyGathering.models.FamilyModel;
 import com.familyGathering.familyGathering.repos.EventRepo;
 import com.familyGathering.familyGathering.repos.FamiliesRepo;
 import com.familyGathering.familyGathering.repos.FamilyMemberRepo;
@@ -29,8 +30,9 @@ public class MainController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
-    @Autowired
-    HttpServletRequest httpServletRequest;
+
+//    @Autowired
+//    HttpServletRequest httpServletRequest;
 
     @Autowired
     HttpServletRequest request;
@@ -78,12 +80,17 @@ public class MainController {
         if(p != null) {
             String userName = p.getName();
             FamilyMemberModel familyMemberModel = familyMemberRepo.findByUsername(userName);
-            familyMemberModel.setAdmin(true);
+
             if (familyMemberModel.isAdmin()) {
                 m.addAttribute("userName", userName);
                 m.addAttribute("user", familyMemberModel);
-                return "admin.html";
 
+                FamilyModel adminCreatedFamily = familyMemberModel.getMyFamily();
+                if (adminCreatedFamily != null ){
+                    m.addAttribute("familyName", adminCreatedFamily.getFamilyName());
+                }
+
+                return "admin";
             }
         }
 
@@ -123,6 +130,26 @@ public class MainController {
 //        System.out.println("@Post Mapping: "+ username+ " "+ password);
         authWithHttpServletRequest(username, password);
 
+
+        return new RedirectView("/myPage");
+    }
+
+    @PostMapping("/createFamily")
+    public RedirectView createFamily(String familyName, Principal p, Model m){
+        if (p != null ){
+            String userName = p.getName();
+            FamilyMemberModel familyMemberModel = familyMemberRepo.findByUsername(userName);
+            if(!familyMemberModel.isAdmin()&& familyMemberModel.getMyFamily() ==null){
+                FamilyModel familyModel = new FamilyModel(familyName);
+                familyMemberModel.setAdmin(true);
+                familyMemberModel.setMyFamily(familyModel);
+                familyModel.setFamilyMember(familyMemberModel);
+                familyMemberRepo.save(familyMemberModel);
+                familiesRepo.save(familyModel);
+
+                return new RedirectView("/admin");
+            }
+        }
 
         return new RedirectView("/myPage");
     }
