@@ -17,21 +17,23 @@ public class FamilyMemberModel implements UserDetails {
     protected String fName;
     protected String lName;
     protected String surname;
-    protected String userName;
+    protected String username;
     protected Integer age;
     protected String password;
 
     protected String email;
 
+
+
     //Generate Constructor
 
     protected FamilyMemberModel(){};
 
-    public FamilyMemberModel(String fName, String lName, String surname, String userName, Integer age,String email) {
+    public FamilyMemberModel(String fName, String lName, String surname, String username, Integer age, String email) {
         this.fName = fName;
         this.lName = lName;
         this.surname = surname;
-        this.userName = userName;
+        this.username = username;
         this.age = age;
         this.email = email;
         this.myFamily = null;
@@ -64,14 +66,65 @@ public class FamilyMemberModel implements UserDetails {
         this.password = password;
     }
 
+    public String getfName() {
+        return this.fName;
+    }
 
+    public void setfName(String fName) {
+        this.fName = fName;
+    }
+
+    public String getlName() {
+        return this.lName;
+    }
+
+    public void setlName(String lName) {
+        this.lName = lName;
+    }
+
+    public String getSurname() {
+        return this.surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Integer getAge() {
+        return this.age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public FamilyModel getMyFamily() {
+        return this.myFamily;
+    }
+
+    public void setMyFamily(FamilyModel myFamily) {
+        this.myFamily = myFamily;
+    }
 
     public Long getMemberId() {
-        return memberId;
+        return this.memberId;
     }
 
     public Set<EventModel> getMyFamilyEvents() {
-        return myFamilyEvents;
+        return this.myFamilyEvents;
     }
 
     public void setMyFamilyEvents(Set<EventModel> myFamilyEvents) {
@@ -92,7 +145,7 @@ public class FamilyMemberModel implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return this.username;
     }
 
     @Override
@@ -113,5 +166,21 @@ public class FamilyMemberModel implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "FamilyMemberModel{" +
+                "memberId=" + memberId +
+                ", fName='" + fName + '\'' +
+                ", lName='" + lName + '\'' +
+                ", surname='" + surname + '\'' +
+                ", userName='" + username + '\'' +
+                ", age=" + age +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", myFamily=" + myFamily +
+                ", myFamilyEvents=" + myFamilyEvents +
+                '}';
     }
 }

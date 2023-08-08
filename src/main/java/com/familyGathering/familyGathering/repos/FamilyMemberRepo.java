@@ -9,5 +9,5 @@ public interface FamilyMemberRepo extends JpaRepository<FamilyMemberModel, Long>
 
     public FamilyMemberModel deleteByMemberId(long id);
 
-    public FamilyMemberModel findByUserName(String userName);
+    public FamilyMemberModel findByUsername(String userName);
 }
