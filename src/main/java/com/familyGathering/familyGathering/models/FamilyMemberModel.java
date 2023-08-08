@@ -19,19 +19,20 @@ public class FamilyMemberModel implements UserDetails {
     protected String surname;
     protected String userName;
     protected Integer age;
+    protected String password;
 
     //Generate Constructor
 
     protected FamilyMemberModel(){};
 
-    public FamilyMemberModel(String fName, String lName, String surname, String userName, Integer age, FamilyModel myFamily, Set<EventModel> myFamilyEvents) {
+    public FamilyMemberModel(String fName, String lName, String surname, String userName, Integer age) {
         this.fName = fName;
         this.lName = lName;
         this.surname = surname;
         this.userName = userName;
         this.age = age;
-        this.myFamily = myFamily;
-        this.myFamilyEvents = myFamilyEvents;
+        this.myFamily = null;
+        this.myFamilyEvents = new HashSet<>();
     }
 
     @ManyToOne
@@ -55,6 +56,13 @@ public class FamilyMemberModel implements UserDetails {
 
     //Generate Getters and Setters
 
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+
     public Long getMemberId() {
         return memberId;
     }
@@ -76,7 +84,7 @@ public class FamilyMemberModel implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return this.password;
     }
 
     @Override
