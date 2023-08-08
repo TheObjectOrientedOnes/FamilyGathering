@@ -34,9 +34,10 @@ public class WebSecurityConfig {
                         .requestMatchers("/css/styles.css").permitAll()
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/signup").permitAll()
+//                        .requestMatchers("/createEvent").permitAll()
 //                        .requestMatchers("/admin").permitAll()
 
-//                        .requestMatchers("/createEvent").permitAll()
+
 //                        .requestMatchers("/myPage/{id}").permitAll()
 //                        .requestMatchers("/login").permitAll()
 //                        .requestMatchers("/family/{id}").permitAll()

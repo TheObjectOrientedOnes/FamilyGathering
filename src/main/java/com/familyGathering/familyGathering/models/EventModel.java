@@ -93,7 +93,51 @@ public class EventModel {
         }
     }
 
+    public long getEventId() {
+        return this.eventId;
+    }
 
+    public void setEventId(long eventId) {
+        this.eventId = eventId;
+    }
 
+    public String getEventName() {
+        return this.eventName;
+    }
 
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
+    public LocalDateTime getDateOfEvent() {
+        return this.dateOfEvent;
+    }
+
+    public void setDateOfEvent(LocalDateTime dateOfEvent) {
+        this.dateOfEvent = dateOfEvent;
+    }
+
+    public String getOrganizer() {
+        return this.organizer;
+    }
+
+    public void setOrganizer(String organizer) {
+        this.organizer = organizer;
+    }
+
+    public FamilyModel getFamily() {
+        return this.family;
+    }
+
+    public void setFamily(FamilyModel family) {
+        this.family = family;
+    }
+
+    public Set<FamilyMemberModel> getEventAttendees() {
+        return this.eventAttendees;
+    }
+
+    public void setEventAttendees(Set<FamilyMemberModel> eventAttendees) {
+        this.eventAttendees = eventAttendees;
+    }
 }

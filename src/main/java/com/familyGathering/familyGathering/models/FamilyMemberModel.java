@@ -23,6 +23,8 @@ public class FamilyMemberModel implements UserDetails {
 
     protected String email;
 
+    protected boolean isAdmin;
+
 
 
     //Generate Constructor
@@ -38,6 +40,7 @@ public class FamilyMemberModel implements UserDetails {
         this.email = email;
         this.myFamily = null;
         this.myFamilyEvents = new HashSet<>();
+        this.isAdmin = false;
     }
 
     @ManyToOne
@@ -61,6 +64,14 @@ public class FamilyMemberModel implements UserDetails {
 
     //Generate Getters and Setters
 
+
+    public boolean isAdmin() {
+        return this.isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
 
     public void setPassword(String password) {
         this.password = password;
