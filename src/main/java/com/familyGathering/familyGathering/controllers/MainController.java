@@ -91,7 +91,7 @@ public class MainController {
 
     @PostMapping("/signup")
     public RedirectView signUpFamilyMember(String email,String firstname, String lastname,String username ,String password, String surname, String age){
-        FamilyMemberModel familyMemberModel = new FamilyMemberModel(firstname,lastname,surname,username,Integer.parseInt(age));
+        FamilyMemberModel familyMemberModel = new FamilyMemberModel(firstname,lastname,surname,username,Integer.parseInt(age),email);
         String encryptedPassword = passwordEncoder.encode(password);
         familyMemberModel.setPassword(encryptedPassword);
         familyMemberRepo.save(familyMemberModel);

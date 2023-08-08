@@ -13,6 +13,7 @@ public abstract class StaticUserModel {
     protected String surname;
     protected String userName;
     protected Integer age;
+    protected String email;
 
 
     public StaticUserModel() {

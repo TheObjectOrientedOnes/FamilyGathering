@@ -21,16 +21,19 @@ public class FamilyMemberModel implements UserDetails {
     protected Integer age;
     protected String password;
 
+    protected String email;
+
     //Generate Constructor
 
     protected FamilyMemberModel(){};
 
-    public FamilyMemberModel(String fName, String lName, String surname, String userName, Integer age) {
+    public FamilyMemberModel(String fName, String lName, String surname, String userName, Integer age,String email) {
         this.fName = fName;
         this.lName = lName;
         this.surname = surname;
         this.userName = userName;
         this.age = age;
+        this.email = email;
         this.myFamily = null;
         this.myFamilyEvents = new HashSet<>();
     }
