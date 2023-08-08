@@ -6,6 +6,7 @@ import com.familyGathering.familyGathering.repos.FamiliesRepo;
 import com.familyGathering.familyGathering.repos.FamilyMemberRepo;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -52,12 +53,15 @@ public class MainController {
         return "splash";
     }
 
-    @GetMapping("/myPage/{id}")
-    String getMyPage(Principal p, Model m, @PathVariable Long id){
+    @GetMapping("/myPage")
+    String getMyPage(Principal p, Model m){
         if(p != null){
             String userName = p.getName();
-            FamilyMemberModel familyMemberModel = familyMemberRepo.findByUserName(userName);
-            m.addAttribute("userName", familyMemberModel.getUsername());
+            System.out.println(userName + " This is the username");
+            FamilyMemberModel familyMemberModel = familyMemberRepo.findByUsername(userName);
+            m.addAttribute("userName", userName);
+            m.addAttribute("user",familyMemberModel);
+//            m.addAttribute("lastName", familyMemberModel.getlName());
         }
         return "myPage.html";
     }
@@ -87,6 +91,14 @@ public class MainController {
         }
     }
 
+    @GetMapping("/logout")
+
+    public RedirectView logout(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.invalidate();
+        return new RedirectView("/");
+    }
+
     //------------------Post Mappings Below---------------------------
 
     @PostMapping("/signup")
@@ -95,9 +107,12 @@ public class MainController {
         String encryptedPassword = passwordEncoder.encode(password);
         familyMemberModel.setPassword(encryptedPassword);
         familyMemberRepo.save(familyMemberModel);
+
+//        System.out.println("@Post Mapping: "+ username+ " "+ password);
         authWithHttpServletRequest(username, password);
 
-        return new RedirectView("/");
+
+        return new RedirectView("/myPage");
     }
 
 
