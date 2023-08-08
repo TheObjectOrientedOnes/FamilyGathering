@@ -11,6 +11,95 @@
   <title th:text="${family.title}">My Page</title>
 </head>
 <body>
+<<<<<<< Updated upstream
+=======
+
+
+<!-- <h1 th:text="${userName}">Default value</h1> -->
+
+
+ 
+
+<!--<h2 th:text="${firstName.fname}">Default second</h2>-->
+<!-- 
+<h3 th:text="${user.getfName}">Default second</h3>
+<h3 th:text="${user.getfName}">Default second</h3>
+<h3 th:text="${user.getSurname}">Default second</h3>
+<h3 th:text="${user.getAge}">Default second</h3> -->
+
+<h2 class="my-4 text-center">Welcome</h2>
+
+<div class="row mt-4">
+     
+      <div class="col-md-4">
+          <img src="https://i.pinimg.com/1200x/23/60/5f/23605fe1526c0b7d2d11421022cec450.jpg" alt="User's Photo" class="img-fluid rounded-circle" />
+      </div>
+
+
+<div class="card mx-auto" style="max-width: 400px;">
+    <div class="card-header">
+        <h3 th:text="${userName}">Default User Name</h3>
+    </div>
+    <div class="card-body">
+        <p class="mb-2"><strong>First Name:</strong> <span th:text="${user.getfName}">Default First Name</span></p>
+        <p class="mb-2"><strong>Last Name:</strong> <span th:text="${user.getfName}">Default Last Name</span></p>
+        <p class="mb-2"><strong>Surname:</strong> <span th:text="${user.getSurname}">Default Surname</span></p>
+        <p class="mb-2"><strong>Age:</strong> <span th:text="${user.getAge}">Default Age</span></p>
+    </div>
+</div>
+
+<div class="my-4">
+      <form action="/setFamily" method="post" class="row">
+          <div class="col-sm-8">
+              <label for="familySelect" class="form-label">Select your family:</label>
+              <select id="familySelect" class="form-control" name="familyId">
+                  <option th:each="family : ${families}" th:value="${family.id}" th:text="${family.name}">Default family name</option>
+              </select>
+          </div>
+          <div class="col-sm-4 d-flex align-items-end">
+              <button type="submit" class="btn btn-primary me-2">Set Family</button>
+              <a href="/createFamily" class="btn btn-secondary">Create Family</a>
+          </div>
+      </form>
+  </div> 
+
+<div class="mt-4">
+      <h3 th:text="${user.getSurname + '\'s Events'}">Default Family's Events</h3> <div class="mt-4 mb-4">
+            <button type="button" class="btn btn-primary" th:href="@{/createEvent}">Add Event</button>
+        </div>
+  
+      <ul class="list-group">
+          
+          <li class="list-group-item" th:each="event : ${familyEvents}">
+              <h5 th:text="${event.title}">Event Title</h5>
+              <p th:text="${event.description}">Event Description</p>
+              <p><strong>Date:</strong> <span th:text="${event.date}">Event Date</span></p>
+              
+              
+              <form th:action="@{/rsvp}" method="post">
+                  <input type="hidden" th:value="${event.id}" name="eventId"/>
+                  <div class="btn-group" role="group">
+                      <button type="submit" name="rsvp" value="Going" class="btn btn-success">Going</button>
+                      <button type="submit" name="rsvp" value="Maybe" class="btn btn-warning">Maybe</button>
+                      <button type="submit" name="rsvp" value="Not Going" class="btn btn-danger">Not Going</button>
+                  </div>
+              </form>
+          </li>
+      </ul>
+  </div>
+  
+
+  <h3 th:text="${user.getSurname + '\'s Past Events'}">Default Family's Past Events</h3>
+<ul class="list-group">
+    
+    <li class="list-group-item" th:each="event : ${pastFamilyEvents}">
+        <h5 th:text="${event.title}">Past Event Title</h5>
+        <p th:text="${event.description}">Past Event Description</p>
+        <p><strong>Date:</strong> <span th:text="${event.date}">Past Event Date</span></p>
+    </li>
+</ul>
+
+>>>>>>> Stashed changes
   
 </body>
 </html>

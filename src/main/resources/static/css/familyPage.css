@@ -1,0 +1,8 @@
+.photo-column {
+  padding-right: 10px; /* or any desired value */
+}
+
+/* Adjusts the padding to the left of the user info column */
+.info-column {
+  padding-left: 10px; /* or any desired value */
+}
