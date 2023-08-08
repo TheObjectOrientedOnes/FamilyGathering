@@ -37,9 +37,6 @@ public class MainController {
 
     @GetMapping("/")
     String getHomePage() {
-
-//        String username = p.getName();
-//        FamilyMemberModel familyMemberModel = familyMemberRepo.findByUserName(username);
         return "splash.html";
     }
 
@@ -57,24 +54,40 @@ public class MainController {
     String getMyPage(Principal p, Model m){
         if(p != null){
             String userName = p.getName();
-            System.out.println(userName + " This is the username");
             FamilyMemberModel familyMemberModel = familyMemberRepo.findByUsername(userName);
             m.addAttribute("userName", userName);
             m.addAttribute("user",familyMemberModel);
-//            m.addAttribute("lastName", familyMemberModel.getlName());
         }
         return "myPage.html";
     }
 
     @GetMapping("/createEvent")
     String getCreateEventPage(Principal p, Model m){
-        return "addEvent.html";
+        if(p != null) {
+            String userName = p.getName();
+            FamilyMemberModel familyMemberModel = familyMemberRepo.findByUsername(userName);
+            m.addAttribute("user", familyMemberModel);
+            System.out.println("GetMapping got here");
+            return "addEvent.html";
+        }
+        return "redirect:/";
     }
 
     @GetMapping("/admin")
     String getAdminPage(Principal p, Model m){
+        if(p != null) {
+            String userName = p.getName();
+            FamilyMemberModel familyMemberModel = familyMemberRepo.findByUsername(userName);
+            familyMemberModel.setAdmin(true);
+            if (familyMemberModel.isAdmin()) {
+                m.addAttribute("userName", userName);
+                m.addAttribute("user", familyMemberModel);
+                return "admin.html";
 
-        return "admin.html";
+            }
+        }
+
+        return "redirect:/myPage";
     }
 
     @GetMapping("/family/{id}")
