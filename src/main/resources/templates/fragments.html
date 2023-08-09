@@ -14,14 +14,16 @@
 <body class="container">
   <nav th:fragment="header">
     <h1 th:text="${title}">Family Gathering</h1>
-    <ul class="navbar navbar-expand-md navbar-dark bg-dark navbar-fixed-top text-white">
+    <ul class="navbar sticky-top navbar-expand-md navbar-dark bg-dark navbar-fixed-top text-white">
       <li class="nav-item"><a class="nav-link" href="/myPage">My Page</a></li>
       <li class="nav-item"><a class="nav-link" href="/familyPage">Family Page</a></li>
       <li class="nav-item"><a class="nav-link" href="/addEvent">Add Event</a></li>
     </ul>
   </nav>
 
-
+  <div th:fragment="footer" class="footer">
+    &copy; FamilyGathering 2023
+</div>
 </body>
 </html>
 </html>

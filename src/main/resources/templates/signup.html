@@ -11,6 +11,9 @@
 <!--  <title th:text="${family.title}">Signup</title>-->
 </head>
 <body>
+
+      <header th:replace="fragments/header :: header"></header>
+      
       <div class="form-container">
             <main class="container">
 
@@ -46,5 +49,6 @@
                   </form>
                   </main>
       </div>
+      <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

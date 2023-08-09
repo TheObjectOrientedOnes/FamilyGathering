@@ -2,10 +2,12 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/family.css">
     <title>Error!</title>
 </head>
 <body>
 <h1>Encountered an Error</h1>
 <span th:text="${message}"></span>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

@@ -12,7 +12,7 @@
 </head>
 <body>
 
-
+    <header th:replace="fragments/header :: header"></header>
 
 <!-- <h1 th:text="${userName}">Default value</h1> -->
 
@@ -101,6 +101,7 @@
         <p th:text="${event.description}">Past Event Description</p>
         <p><strong>Date:</strong> <span th:text="${event.date}">Past Event Date</span></p>
     </li>
-</ul>  
+</ul> 
+<div th:replace="fragments/footer :: footer"></div> 
 </body>
 </html>

@@ -14,6 +14,9 @@
 </head>
 </head>
 <body>
+
+    <header th:replace="fragments/header :: header"></header>
+    
     <div class="form-container">
       <form  action="/addEvent" method="POST" class="row g-3">
 
@@ -39,6 +42,6 @@
           </div>
       </form>
     </div>
-
+    <div th:replace="fragments/footer :: footer"></div>
   </body> 
 </html>
