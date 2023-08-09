@@ -12,6 +12,9 @@
   <title th:text="${familyName}">Family Page</title>
 </head>
 <body class="container">
+
+      <header th:replace="fragments/header :: header"></header>
+      
       <div>
           <h1>Family Member Details</h1>
           <h2>RSVP</h2>
@@ -34,6 +37,8 @@
               </li>
           </ul>
       </div>
+
+<div th:replace="fragments/footer :: footer"></div>
 
 </body>
 </html>
