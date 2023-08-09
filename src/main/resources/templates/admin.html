@@ -18,5 +18,41 @@
 <h3 th:text="${familyName}">Default Family Name</h3>
 <h3 th:text="${adminStatus}">Default Family Name</h3>
 
+<h2>Access Requests</h2>
+<table class="table">
+  <thead>
+  <tr>
+    <th>Request ID</th>
+    <th>Member ID</th>
+    <th>Family ID</th>
+    <th>Status</th>
+    <th>Action</th> <!-- Added this header for the Approve button -->
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="request : ${requests}">
+    <td th:text="${request.requestId}"></td>
+    <td th:text="${request.requestMemberId}"></td>
+    <td th:text="${request.requestFamilyId}"></td>
+    <td th:text="${request.status}"></td> <!-- Status column -->
+    <td> <!-- Action column -->
+      <div th:if="${request.status == 'Approved'}">
+        <button class="btn btn-success" disabled="disabled">Approved</button>
+      </div>
+      <div th:if="${request.status != 'Approved'}">
+        <form th:action="@{/approveRequest}" method="post" class="d-inline">
+          <input type="hidden" th:value="${request.requestId}" name="requestId"/>
+          <button type="submit" class="btn btn-primary">Approve</button>
+        </form>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+
+
+
+
+</table>
+
 </body>
 </html>
