@@ -52,7 +52,7 @@
           <div class="col-sm-8">
               <label for="familySelect" class="form-label">Select your family:</label>
               <select id="familySelect" class="form-control" name="familyId">
-                  <option th:each="family : ${families}" th:value="${family.id}" th:text="${family.name}">Default family name</option>
+                  <option th:each="family : ${families}" th:value="${family.getFamilyId}" th:text="${family.getFamilyName}">Default family name</option>
               </select>
           </div>
       </form>
@@ -65,11 +65,11 @@
             <input type="submit" class="btn btn-secondary">Create Family</input>
         </div>
     </form>
-  </div> 
-
+  </div>
+    <button type="button" class="btn btn-primary" ><a href="/createEvent" class="btn btn-primary">Add Event</a></button>
 <div class="mt-4">
 <!--      <h3 th:text="${user.getSurname + '\'s Events'}">Default Family's Events</h3> <div class="mt-4 mb-4">-->
-            <button type="button" class="btn btn-primary" th:href="@{/createEvent}">Add Event</button>
+
         </div>
   
       <ul class="list-group">
