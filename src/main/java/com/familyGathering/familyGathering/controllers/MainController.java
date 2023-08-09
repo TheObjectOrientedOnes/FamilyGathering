@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -57,8 +58,10 @@ public class MainController {
         if(p != null){
             String userName = p.getName();
             FamilyMemberModel familyMemberModel = familyMemberRepo.findByUsername(userName);
+            List<FamilyModel> allFamilies = familiesRepo.findAll();
             m.addAttribute("userName", userName);
             m.addAttribute("user",familyMemberModel);
+            m.addAttribute("families", allFamilies);
         }
         return "myPage.html";
     }
@@ -136,6 +139,7 @@ public class MainController {
         return new RedirectView("/myPage");
     }
 
+
     @PostMapping("/createFamily")
     public RedirectView createFamily(String familyName, Principal p, Model m){
         if (p != null ){
@@ -148,7 +152,6 @@ public class MainController {
                 familyModel.setFamilyMember(familyMemberModel);
 
                 familiesRepo.save(familyModel);
-
                 familyMemberRepo.save(familyMemberModel);
 
                 return new RedirectView("/admin");
