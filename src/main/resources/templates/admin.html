@@ -11,6 +11,7 @@
 <!--  <title th:text="${family.title}">Admin Page</title>-->
   <title> Admin Page</title>
 </head>
+<div th:replace="~{/fragments/header :: header}"></div>
 <body>
 <h3 th:text="${user.getfName}">Default second</h3>
 <h3 th:text="${user.getlName}">Default second</h3>
