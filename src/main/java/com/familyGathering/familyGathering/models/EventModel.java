@@ -49,7 +49,7 @@ public class EventModel {
         this.organizer = organizer;
         if (idOfFamily != null){
             FamilyModel familyModel = new FamilyModel();
-            familyModel.setFamilyIdId(idOfFamily);
+            familyModel.setFamilyId(idOfFamily);
             this.family = familyModel;
 
         }

@@ -28,13 +28,6 @@ public class FamilyModel {
         this.familyMembers = new ArrayList<>();
     }
 
-    public Long getFamilyIdId() {
-        return familyId;
-    }
-
-    public void setFamilyIdId(Long id) {
-        this.familyId = id;
-    }
 
     public Long getFamilyId() {
         return this.familyId;

@@ -72,7 +72,7 @@ public class MainController {
             String userName = p.getName();
             FamilyMemberModel familyMemberModel = familyMemberRepo.findByUsername(userName);
             m.addAttribute("user", familyMemberModel);
-            System.out.println("GetMapping got here");
+
             return "addEvent.html";
         }
         return "redirect:/";
@@ -159,6 +159,11 @@ public class MainController {
         }
 
         return new RedirectView("/myPage");
+    }
+
+    @PostMapping("/addEvent")
+    public RedirectView createFamilyEvent(String title){
+        return new RedirectView("/");
     }
 
 
