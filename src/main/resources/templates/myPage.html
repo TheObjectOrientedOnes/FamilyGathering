@@ -55,11 +55,16 @@
                   <option th:each="family : ${families}" th:value="${family.id}" th:text="${family.name}">Default family name</option>
               </select>
           </div>
-          <div class="col-sm-4 d-flex align-items-end">
-              <button type="submit" class="btn btn-primary me-2">Set Family</button>
-              <a href="/createFamily" class="btn btn-secondary">Create Family</a>
-          </div>
       </form>
+
+    <form action="/createFamily" method="POST" class="row">
+        <div class="col-sm-4 d-flex align-items-end">
+            <label for="familyName" class="form-label">Family Name:</label>
+            <input type="text" id="familyName" name="familyName" class="form-control" required>
+            <button type="submit" class="btn btn-primary me-2">Set Family</button>
+            <input type="submit" class="btn btn-secondary">Create Family</input>
+        </div>
+    </form>
   </div> 
 
 <div class="mt-4">

@@ -118,6 +118,8 @@ public class MainController {
         return new RedirectView("/");
     }
 
+    //need to getMapping for the
+
     //------------------Post Mappings Below---------------------------
 
     @PostMapping("/signup")
@@ -144,8 +146,10 @@ public class MainController {
                 familyMemberModel.setAdmin(true);
                 familyMemberModel.setMyFamily(familyModel);
                 familyModel.setFamilyMember(familyMemberModel);
-                familyMemberRepo.save(familyMemberModel);
+
                 familiesRepo.save(familyModel);
+
+                familyMemberRepo.save(familyMemberModel);
 
                 return new RedirectView("/admin");
             }
