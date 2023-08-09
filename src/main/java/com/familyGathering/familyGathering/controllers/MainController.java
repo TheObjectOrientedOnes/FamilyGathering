@@ -1,5 +1,6 @@
 package com.familyGathering.familyGathering.controllers;
 
+import com.familyGathering.familyGathering.models.EventModel;
 import com.familyGathering.familyGathering.models.FamilyMemberModel;
 import com.familyGathering.familyGathering.models.FamilyModel;
 import com.familyGathering.familyGathering.repos.EventRepo;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -31,9 +34,6 @@ public class MainController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
-
-//    @Autowired
-//    HttpServletRequest httpServletRequest;
 
     @Autowired
     HttpServletRequest request;
@@ -91,6 +91,7 @@ public class MainController {
                 FamilyModel adminCreatedFamily = familyMemberModel.getMyFamily();
                 if (adminCreatedFamily != null ){
                     m.addAttribute("familyName", adminCreatedFamily.getFamilyName());
+                    m.addAttribute("adminStatus", familyMemberModel.isAdmin());
                 }
 
                 return "admin";
@@ -162,8 +163,35 @@ public class MainController {
     }
 
     @PostMapping("/addEvent")
-    public RedirectView createFamilyEvent(String title){
+    public RedirectView createFamilyEvent(String eventName, String eventDate, String location, Principal p, Model m){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        System.out.println("Received eventDate Before Parse: " + eventDate);
+        LocalDate dateTime = LocalDate.parse(eventDate, formatter);
+        System.out.println("Received eventDate After Parse: " + eventDate);
+        if (p != null){
+            String userName = p.getName();
+            FamilyMemberModel familyMemberModel = familyMemberRepo.findByUsername(userName);
+            EventModel newEvent = new EventModel(eventName,dateTime,familyMemberModel.getUsername(),familyMemberModel.getMyFamily().getFamilyId());
+            eventRepo.save(newEvent);
+            return new RedirectView("/myPage");
+        }
+
         return new RedirectView("/");
+    }
+
+
+    @GetMapping("/familyPage")
+    public String getFamilyPage(Model m, Principal p) {
+        if (p != null) {
+            String username = p.getName();
+            FamilyMemberModel familyMember = familyMemberRepo.findByUsername(username);
+            FamilyModel family = familyMember.getMyFamily();
+            if (family != null) {
+                m.addAttribute("familyName", family.getFamilyName());
+                m.addAttribute("events", family.getFamilyEvents());
+            }
+        }
+        return "familyPage";
     }
 
 

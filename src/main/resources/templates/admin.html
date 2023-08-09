@@ -13,14 +13,11 @@
   <title> Admin Page</title>
 </head>
 <body>
-<div class="container mt-5">
-  <div class="card">
-      <div class="card-body">
-          <h3 class="card-title" th:text="${user.getfName}">Default Name</h3>
-          <h4 class="card-subtitle mb-2 text-muted" th:text="${user.getlName}">Default Surname</h4>
-          <p class="card-text" th:text="${familyName}">Default Family Name</p>
-      </div>
-  </div>
-  <div th:replace="fragments/footer :: footer"></div>
+
+<h3 th:text="${user.getfName}">Default second</h3>
+<h3 th:text="${user.getlName}">Default second</h3>
+<h3 th:text="${familyName}">Default Family Name</h3>
+<h3 th:text="${adminStatus}">Default Family Name</h3>
+
 </body>
 </html>

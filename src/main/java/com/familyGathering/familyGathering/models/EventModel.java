@@ -2,7 +2,7 @@ package com.familyGathering.familyGathering.models;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +14,7 @@ public class EventModel {
     long eventId;
 
     String eventName;
-    LocalDateTime dateOfEvent;
+    LocalDate dateOfEvent;
     String organizer;
     @ManyToOne
     @JoinColumn(name = "familyId")
@@ -43,7 +43,7 @@ public class EventModel {
 
     protected EventModel(){};
 
-    public EventModel(String eventName, LocalDateTime dateOfEvent, String organizer, Long idOfFamily) {
+    public EventModel(String eventName, LocalDate dateOfEvent, String organizer, Long idOfFamily) {
         this.eventName = eventName;
         this.dateOfEvent = dateOfEvent;
         this.organizer = organizer;
@@ -83,8 +83,8 @@ public class EventModel {
 
     }
 
-    boolean changeDateOfEvent(LocalDateTime newDate){
-        LocalDateTime now = LocalDateTime.now();
+    boolean changeDateOfEvent(LocalDate newDate){
+        LocalDate now = LocalDate.now();
         if (newDate.isBefore(now)){
             return false;
         }else{
@@ -109,11 +109,11 @@ public class EventModel {
         this.eventName = eventName;
     }
 
-    public LocalDateTime getDateOfEvent() {
+    public LocalDate getDateOfEvent() {
         return this.dateOfEvent;
     }
 
-    public void setDateOfEvent(LocalDateTime dateOfEvent) {
+    public void setDateOfEvent(LocalDate dateOfEvent) {
         this.dateOfEvent = dateOfEvent;
     }
 
