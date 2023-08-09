@@ -19,27 +19,8 @@
     <h1>Login</h1>
     <h2>(or sign up <a href="/signup">here</a>)</h2>
 
-<<<<<<< Updated upstream
-            <form th:action="@{/login}" method="post">
-                  <div class="mb-3">
-                      <label for="username" class="form-label">Username:</label>
-                      <input type="text" id="username" name="username" class="form-control" required>
-                  </div>
-                  <div class="mb-3">
-                      <label for="password" class="form-label">Password:</label>
-                      <input type="password" id="password" name="password" class="form-control" required>
-                  </div>
-                  <div>
-                      <button type="submit" class="btn btn-dark">Login</button>
-                  </div>
-              </form>
 
-          <div>
-              <button type="submit" class="btn btn-dark">Logout</button>
-          </div>
-          <p><a href="/logout" role="button" >Logout</a></p>
-            </main>
-=======
+
     <div th:if="${param.error}" class="alert alert-danger" role="alert">
         Login Failed, please try again.
     </div>
@@ -60,11 +41,11 @@
 
     <div>
         <button type="submit" class="btn btn-secondary btn-sm">Logout</button>
-        <p th:unless="${#vars.isUserAuthenticated()}">
+<!--        <p th:unless="${#vars.isUserAuthenticated()}">-->
             <a href="/logout" role="button">Logout</a>
         </p>
     </div>
->>>>>>> Stashed changes
+
 </body>
 
 </html>

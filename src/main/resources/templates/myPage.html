@@ -12,7 +12,6 @@
 </head>
 <body>
 
-=======
 
 
 <!-- <h1 th:text="${userName}">Default value</h1> -->
@@ -64,7 +63,7 @@
   </div> 
 
 <div class="mt-4">
-      <h3 th:text="${user.getSurname + '\'s Events'}">Default Family's Events</h3> <div class="mt-4 mb-4">
+<!--      <h3 th:text="${user.getSurname + '\'s Events'}">Default Family's Events</h3> <div class="mt-4 mb-4">-->
             <button type="button" class="btn btn-primary" th:href="@{/createEvent}">Add Event</button>
         </div>
   
@@ -89,7 +88,7 @@
   </div>
   
 
-  <h3 th:text="${user.getSurname + '\'s Past Events'}">Default Family's Past Events</h3>
+<!--  <h3 th:text="${user.getSurname + '\'s Past Events'}">Default Family's Past Events</h3>-->
 <ul class="list-group">
     
     <li class="list-group-item" th:each="event : ${pastFamilyEvents}">
