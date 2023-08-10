@@ -1,1 +1,26 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 7rem;
+    width: 100%;
+    padding: 1%;
+    display: flex;
+    justify-content: flex-start;
+    z-index: 1000;
+}
 
+navLinks {
+
+}
+
+.btn {
+white-space: nowrap;
+display: inline-block;
+}
+
+main {
+    position: relative;
+    padding: 7rem;
+}
