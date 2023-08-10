@@ -5,22 +5,33 @@
     right: 0;
     height: 7rem;
     width: 100%;
-    padding: 1%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 7rem;
     display: flex;
     justify-content: flex-start;
     z-index: 1000;
 }
 
-navLinks {
-
+.nav-link {
+    margin-right: 1%;
+    white-space: nowrap;
 }
 
 .btn {
-white-space: nowrap;
-display: inline-block;
+    white-space: nowrap;
+    display: inline-block;
+    padding: 1%;
 }
 
 main {
     position: relative;
-    padding: 7rem;
+    padding-top: 7rem;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+container {
+    padding-left: 7rem;
+    padding-right: 7rem;
 }
