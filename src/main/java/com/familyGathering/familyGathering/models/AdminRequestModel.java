@@ -14,6 +14,8 @@ public class AdminRequestModel {
     public Long id;
     public Long memberId;
     public String status; // Pending, Approved, etc.
+    public String fName;
+    public String lName;
 
     public AdminRequestModel() {
     }
@@ -25,6 +27,22 @@ public class AdminRequestModel {
     }
 
     // Getters and Setters
+
+    public String getfName() {
+        return this.fName;
+    }
+
+    public void setfName(String fName) {
+        this.fName = fName;
+    }
+
+    public String getlName() {
+        return this.lName;
+    }
+
+    public void setlName(String lName) {
+        this.lName = lName;
+    }
 
     public Long getId() {
         return this.id;
