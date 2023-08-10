@@ -7,7 +7,7 @@
 
 <h1>Image Upload Form</h1>
 
-<form th:action="@{/imageUpload}" th:object="${uploadForm}" method="post" enctype="multipart/form-data">
+<form th:action="@{/imageUpload}" method="post" enctype="multipart/form-data">
     <input type="file" name="file" accept="image/*" required />
     <input type="submit" value="Upload" />
 </form>

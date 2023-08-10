@@ -25,7 +25,7 @@ public class ImageUploadService {
 
         ImageModel image = new ImageModel();
         image.setFamilyMemberModel(user);
-        image.setImageName(file.getOriginalFilename());
+        image.setImageName("User:_"+ user.getUsername()+"_user_ID:_"+ user.getMemberId());
         image.setImageBytes(file.getBytes());
 
         imageRepo.save(image);

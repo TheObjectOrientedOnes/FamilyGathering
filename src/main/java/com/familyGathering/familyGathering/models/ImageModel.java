@@ -47,5 +47,7 @@ public class ImageModel {
         this.familyMemberModel = familyMemberModel;
     }
 
-
+    public Long getImageId() {
+        return this.imageId;
+    }
 }

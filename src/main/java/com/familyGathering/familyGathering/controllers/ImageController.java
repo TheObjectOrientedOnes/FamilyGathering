@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
@@ -37,23 +38,12 @@ public class ImageController {
     public String showUploadForm(Model model, Principal p) {
         String userName = p.getName();
         FamilyMemberModel familyMemberModel = familyMemberRepo.findByUsername(userName);
-//        FamilyMemberModel user = familyMemberRepo.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
         model.addAttribute("userId", familyMemberModel.getMemberId());
-//        model.addAttribute("uploadForm", new Object()); // Use an appropriate object here
+
         return "uploadForm.html";
     }
 
-    @PostMapping("/imageUpload")
-    public String uploadImage( @RequestParam("file") MultipartFile file, Principal p) {
-        String userName = p.getName();
-        FamilyMemberModel familyMemberModel = familyMemberRepo.findByUsername(userName);
-        try {
-            imageUploadService.uploadImage(file, familyMemberModel.getMemberId());
-            return "redirect:/myPage";
-        } catch (IOException e) {
-            return "redirect:/";
-        }
-    }
+
 
     @GetMapping("/image")
     @Transactional
@@ -63,23 +53,33 @@ public class ImageController {
         try {
             FamilyMemberModel familyMemberModel = familyMemberRepo.findByUsername(userName);
             if (familyMemberModel != null) {
-                Optional<ImageModel> imageOptional = imageRepo.findByFamilyMemberModel(familyMemberModel);
-                System.out.println("Got to the first if of getUserImage");
-                System.out.println(imageOptional.toString());
-                if (imageOptional.isPresent()) {
-                    System.out.println("Got to the Second if of getUserImage");
-                    ImageModel image = imageOptional.get();
+                ArrayList<Optional> imageOptional = imageRepo.findByFamilyMemberModel(familyMemberModel);
+                if (!imageOptional.isEmpty()) {
+                    ImageModel image = (ImageModel) imageOptional.get(0).get();
                     HttpHeaders headers = new HttpHeaders();
                     headers.setContentType(MediaType.IMAGE_JPEG); // Set the appropriate content type
                     return new ResponseEntity<>(image.getImageBytes(), headers, HttpStatus.OK);
                 }
             }
-            System.out.println(new ResponseEntity<>(HttpStatus.NOT_FOUND));
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
+        }
+    }
+
+    //----------------POST Mapping----------------------------------
+
+    @PostMapping("/imageUpload")
+    public String uploadImage(@RequestParam("file") MultipartFile file, Principal p) {
+        String userName = p.getName();
+        FamilyMemberModel familyMemberModel = familyMemberRepo.findByUsername(userName);
+        try {
+            imageUploadService.uploadImage(file, familyMemberModel.getMemberId());
+            return "redirect:/myPage";
+        } catch (IOException e) {
+            return "redirect:/";
         }
     }
 
