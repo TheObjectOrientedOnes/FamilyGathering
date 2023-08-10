@@ -30,17 +30,6 @@ public class EventModel {
     Set<FamilyMemberModel> eventAttendees = new HashSet<>();
 
 
-//      Chat GPT helper methods
-//    public void addFamilyMember(FamilyMemberModel member) {
-//        eventAttendees.add(member);
-//        member.getMyFamilyEvents().add(this);
-//    }
-//
-//    public void removeFamilyMember(FamilyMemberModel member) {
-//        eventAttendees.remove(member);
-//        member.getMyFamilyEvents().remove(this);
-//    }
-
     protected EventModel(){};
 
     public EventModel(String eventName, LocalDate dateOfEvent, String organizer, Long idOfFamily) {
@@ -53,16 +42,15 @@ public class EventModel {
             this.family = familyModel;
 
         }
-//        this.eventAttendees = new ArrayList<FamilyMemberModel>();
+
     }
 
-    boolean addFamilyMemberToEvent(FamilyMemberModel member){
-        if (member == null){
+    public boolean addFamilyMemberToEvent(FamilyMemberModel member) {
+        if (member == null) {
             return false;
         }
         boolean added = eventAttendees.add(member);
-
-        if(added){
+        if (added) {
             member.getMyFamilyEvents().add(this);
         }
         return added;

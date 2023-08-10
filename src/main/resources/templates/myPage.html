@@ -1,109 +1,107 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/family.css">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/myPage.css">
     <div th:replace="~{/fragments/header :: header}"></div>
-
-
     <title>My Page</title>
 </head>
+
 <body>
 
-
-
-<!-- <h1 th:text="${userName}">Default value</h1> -->
-
-
- 
-
-<!--<h2 th:text="${firstName.fname}">Default second</h2>-->
-<!-- 
-<h3 th:text="${user.getfName}">Default second</h3>
-<h3 th:text="${user.getfName}">Default second</h3>
-<h3 th:text="${user.getSurname}">Default second</h3>
-<h3 th:text="${user.getAge}">Default second</h3> -->
 
 <h2 class="my-4 text-center">Welcome</h2>
 
 <div class="row mt-4">
-     
-      <div class="col-md-4">
-          <img src="https://i.pinimg.com/1200x/23/60/5f/23605fe1526c0b7d2d11421022cec450.jpg" alt="User's Photo" class="img-fluid rounded-circle" />
-      </div>
 
-
-<div class="card mx-auto" style="max-width: 400px;">
-    <div class="card-header">
-        <h3 th:text="${userName}">Default User Name</h3>
+    <div class="col-md-4">
+        <img src="https://i.pinimg.com/1200x/23/60/5f/23605fe1526c0b7d2d11421022cec450.jpg" alt="User's Photo"
+             class="img-fluid rounded-circle"/>
     </div>
-    <div class="card-body">
-        <p class="mb-2"><strong>First Name:</strong> <span th:text="${user.getfName}">Default First Name</span></p>
-        <p class="mb-2"><strong>Last Name:</strong> <span th:text="${user.getfName}">Default Last Name</span></p>
-        <p class="mb-2"><strong>Surname:</strong> <span th:text="${user.getSurname}">Default Surname</span></p>
-        <p class="mb-2"><strong>Age:</strong> <span th:text="${user.getAge}">Default Age</span></p>
+
+
+    <div class="card mx-auto" style="max-width: 400px;">
+        <div class="card-header">
+            <h3 th:text="${userName}">Default User Name</h3>
+        </div>
+        <div class="card-body">
+            <p class="mb-2"><strong>First Name:</strong> <span th:text="${user.getfName}">Default First Name</span></p>
+            <p class="mb-2"><strong>Last Name:</strong> <span th:text="${user.getfName}">Default Last Name</span></p>
+            <p class="mb-2"><strong>Surname:</strong> <span th:text="${user.getSurname}">Default Surname</span></p>
+            <p class="mb-2"><strong>Age:</strong> <span th:text="${user.getAge}">Default Age</span></p>
+            <div class="my-4">
+                <!-- Conditional Button for Admin -->
+                <div th:if="${user.isAdmin}">
+                    <a href="/admin" class="btn btn-warning">Admin Panel</a>
+                </div>
+
+                <div th:if="${!user.isAdmin}">
+                    <form action="/requestAdminStatus" method="post">
+                        <button type="submit" class="btn btn-info">Request Admin Status</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${user.myFamily == null}">
+        <form action="/requestFamilyAccess" method="post" class="row mb-2">
+            <div class="col-sm-8">
+                <label for="familySelect" class="form-label">Select your family:</label>
+                <select id="familySelect" class="form-control" name="familyId">
+                    <option th:each="family : ${families}" th:value="${family.getFamilyId}"
+                            th:text="${family.getFamilyName}">Default family name
+                    </option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Request Family Page Access to Above Family</button>
+        </form>
+    </div>
+
+    <div th:if="${requestStatus != null}">
+        <div th:if="${requestStatus == 'Pending'}">
+            <button class="btn btn-warning" disabled>Pending</button>
+        </div>
+    </div>
+
+    <div th:if="${user.myFamily == null}">
+        <form action="/createFamily" method="POST" class="row">
+            <div class="col-sm-12 d-flex flex-column align-items-start">
+                <label for="familyName" class="form-label">Type the name of the family you wish to create:</label>
+                <input type="text" id="familyName" name="familyName" class="form-control mb-2" required>
+                <button type="submit" class="btn btn-secondary">Create A Family</button>
+            </div>
+        </form>
     </div>
 </div>
 
-<div class="my-4">
-      <form action="/setFamily" method="post" class="row">
-          <div class="col-sm-8">
-              <label for="familySelect" class="form-label">Select your family:</label>
-              <select id="familySelect" class="form-control" name="familyId">
-                  <option th:each="family : ${families}" th:value="${family.getFamilyId}" th:text="${family.getFamilyName}">Default family name</option>
-              </select>
-          </div>
-      </form>
-
-    <form action="/createFamily" method="POST" class="row">
-        <div class="col-sm-4 d-flex align-items-end">
-            <label for="familyName" class="form-label">Family Name:</label>
-            <input type="text" id="familyName" name="familyName" class="form-control" required>
-            <button type="submit" class="btn btn-primary me-2">Set Family</button>
-            <input type="submit" class="btn btn-secondary">Create Family</input>
-        </div>
+<div th:if="${user.myFamily != null}">
+    <form action="/leaveFamily" method="post">
+        <button type="submit" class="btn btn-danger">Leave this Family</button>
     </form>
-  </div>
-    <button type="button" class="btn btn-primary" ><a href="/createEvent" class="btn btn-primary">Add Event</a></button>
-<div class="mt-4">
-<!--      <h3 th:text="${user.getSurname + '\'s Events'}">Default Family's Events</h3> <div class="mt-4 mb-4">-->
+</div>
 
-        </div>
-  
-      <ul class="list-group">
-          
-          <li class="list-group-item" th:each="event : ${familyEvents}">
-              <h5 th:text="${event.title}">Event Title</h5>
-              <p th:text="${event.description}">Event Description</p>
-              <p><strong>Date:</strong> <span th:text="${event.date}">Event Date</span></p>
-              
-              
-              <form th:action="@{/rsvp}" method="post">
-                  <input type="hidden" th:value="${event.id}" name="eventId"/>
-                  <div class="btn-group" role="group">
-                      <button type="submit" name="rsvp" value="Going" class="btn btn-success">Going</button>
-                      <button type="submit" name="rsvp" value="Maybe" class="btn btn-warning">Maybe</button>
-                      <button type="submit" name="rsvp" value="Not Going" class="btn btn-danger">Not Going</button>
-                  </div>
-              </form>
-          </li>
-      </ul>
-  </div>
-  
 
-<!--  <h3 th:text="${user.getSurname + '\'s Past Events'}">Default Family's Past Events</h3>-->
+<a href="/createEvent" class="btn btn-primary">Add Event</a>
+
+<h2>My RSVPed Events</h2>
 <ul class="list-group">
-    
-    <li class="list-group-item" th:each="event : ${pastFamilyEvents}">
-        <h5 th:text="${event.title}">Past Event Title</h5>
-        <p th:text="${event.description}">Past Event Description</p>
-        <p><strong>Date:</strong> <span th:text="${event.date}">Past Event Date</span></p>
+    <li class="list-group-item" th:each="event : ${rsvpEvents}">
+        <strong th:text="${event.eventName}">Event Name</strong>
+        <p th:text="${event.dateOfEvent}">Event Date</p>
     </li>
-</ul>  
+</ul>
+
+
+<div class="d-flex justify-content-between align-items-center">
+    <a href="/logout" class="btn btn-danger">Logout</a>
+</div>
+
 </body>
 </html>
