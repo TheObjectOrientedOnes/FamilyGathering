@@ -39,11 +39,18 @@
                 <div th:if="${user.isAdmin}">
                     <a href="/admin" class="btn btn-warning">Admin Panel</a>
                 </div>
+
+                <div th:if="${!user.isAdmin}">
+                    <form action="/requestAdminStatus" method="post">
+                        <button type="submit" class="btn btn-info">Request Admin Status</button>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>
 
-    <div class="my-4">
+    <div th:if="${user.myFamily == null}">
         <form action="/requestFamilyAccess" method="post" class="row mb-2">
             <div class="col-sm-8">
                 <label for="familySelect" class="form-label">Select your family:</label>
@@ -55,17 +62,15 @@
             </div>
             <button type="submit" class="btn btn-primary mt-2">Request Family Page Access to Above Family</button>
         </form>
+    </div>
 
-        <div th:if="${requestStatus != null}">
-            <div th:if="${requestStatus == 'Pending'}">
-                <button class="btn btn-warning" disabled>Pending</button>
-            </div>
-            <div th:if="${requestStatus == 'Approved'}">
-                <button class="btn btn-success" disabled>Approved</button>
-            </div>
+    <div th:if="${requestStatus != null}">
+        <div th:if="${requestStatus == 'Pending'}">
+            <button class="btn btn-warning" disabled>Pending</button>
         </div>
+    </div>
 
-
+    <div th:if="${user.myFamily == null}">
         <form action="/createFamily" method="POST" class="row">
             <div class="col-sm-12 d-flex flex-column align-items-start">
                 <label for="familyName" class="form-label">Type the name of the family you wish to create:</label>
@@ -74,28 +79,25 @@
             </div>
         </form>
     </div>
-
-
-    <a href="/createEvent" class="btn btn-primary">Add Event</a>
-
-    <div class="mt-4"></div>
-
-    <ul class="list-group">
-        <li class="list-group-item" th:each="event : ${familyEvents}">
-            <h5 th:text="${event.eventName}">Event Title</h5>
-            <p><strong>Date:</strong> <span th:text="${event.dateOfEvent}">Event Date</span></p>
-
-            <form th:action="@{/rsvp}" method="post">
-                <input type="hidden" th:value="${event.id}" name="eventId"/>
-                <div class="btn-group" role="group">
-                    <button type="submit" name="rsvp" value="Going" class="btn btn-success">Going</button>
-                    <button type="submit" name="rsvp" value="Maybe" class="btn btn-warning">Maybe</button>
-                    <button type="submit" name="rsvp" value="Not Going" class="btn btn-danger">Not Going</button>
-                </div>
-            </form>
-        </li>
-    </ul>
 </div>
+
+<div th:if="${user.myFamily != null}">
+    <form action="/leaveFamily" method="post">
+        <button type="submit" class="btn btn-danger">Leave this Family</button>
+    </form>
+</div>
+
+
+<a href="/createEvent" class="btn btn-primary">Add Event</a>
+
+<h2>My RSVPed Events</h2>
+<ul class="list-group">
+    <li class="list-group-item" th:each="event : ${rsvpEvents}">
+        <strong th:text="${event.eventName}">Event Name</strong>
+        <p th:text="${event.dateOfEvent}">Event Date</p>
+    </li>
+</ul>
+
 
 <div class="d-flex justify-content-between align-items-center">
     <a href="/logout" class="btn btn-danger">Logout</a>

@@ -13,4 +13,5 @@ public interface EventRepo extends JpaRepository<EventModel,Long> {
     public EventModel deleteById(long id);
 
     List<EventModel> findByFamily(FamilyModel family);
+
 }

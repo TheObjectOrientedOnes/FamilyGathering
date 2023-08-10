@@ -1,13 +1,7 @@
 package com.familyGathering.familyGathering.controllers;
 
-import com.familyGathering.familyGathering.models.EventModel;
-import com.familyGathering.familyGathering.models.FamilyMemberModel;
-import com.familyGathering.familyGathering.models.FamilyModel;
-import com.familyGathering.familyGathering.models.RequestModel;
-import com.familyGathering.familyGathering.repos.EventRepo;
-import com.familyGathering.familyGathering.repos.FamiliesRepo;
-import com.familyGathering.familyGathering.repos.FamilyMemberRepo;
-import com.familyGathering.familyGathering.repos.RequestRepo;
+import com.familyGathering.familyGathering.models.*;
+import com.familyGathering.familyGathering.repos.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,10 +19,15 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class MainController {
+    @Autowired
+    AdminRequestRepo adminRequestRepo;
     @Autowired
     RequestRepo requestRepo;
     @Autowired
@@ -65,12 +64,19 @@ public class MainController {
             String userName = p.getName();
             FamilyMemberModel familyMemberModel = familyMemberRepo.findByUsername(userName);
             List<FamilyModel> allFamilies = familiesRepo.findAll();
+            // Get the events the family member has RSVPed to
+            Set<EventModel> rsvpEvents = familyMemberModel.getMyFamilyEvents();
+            // Sort the events by date
+            List<EventModel> sortedEvents = rsvpEvents.stream()
+                    .sorted(Comparator.comparing(EventModel::getDateOfEvent))
+                    .collect(Collectors.toList());
             RequestModel request = requestRepo.findByRequestMemberId(familyMemberModel.getMemberId());
             String requestStatus = (request != null) ? request.getStatus() : null;
             m.addAttribute("userName", userName);
             m.addAttribute("user", familyMemberModel);
             m.addAttribute("families", allFamilies);
             m.addAttribute("requestStatus", requestStatus);
+            m.addAttribute("rsvpEvents", sortedEvents); // Add the sorted events to the model
         }
         return "myPage.html";
     }
@@ -124,6 +130,29 @@ public class MainController {
             System.out.println("Error while logging in.");
             e.printStackTrace();
         }
+    }
+
+    @GetMapping("/familyPage")
+    public String getFamilyPage(Model m, Principal p) {
+        if (p != null) {
+            String username = p.getName();
+            FamilyMemberModel familyMember = familyMemberRepo.findByUsername(username);
+            FamilyModel family = familyMember.getMyFamily();
+            if (family != null) {
+                m.addAttribute("familyName", family.getFamilyName());
+
+                // Get the events for this family
+                List<EventModel> events = eventRepo.findByFamily(family);
+                m.addAttribute("events", events);
+
+                // Get the event IDs that the user has RSVPed to
+                Set<Long> rsvpEventIds = familyMember.getMyFamilyEvents().stream()
+                        .map(EventModel::getEventId)
+                        .collect(Collectors.toSet());
+                m.addAttribute("rsvpEventIds", rsvpEventIds); // Add the RSVPed event IDs to the model
+            }
+        }
+        return "familyPage";
     }
 
     @GetMapping("/logout")
@@ -191,23 +220,6 @@ public class MainController {
     }
 
 
-    @GetMapping("/familyPage")
-    public String getFamilyPage(Model m, Principal p) {
-        if (p != null) {
-            String username = p.getName();
-            FamilyMemberModel familyMember = familyMemberRepo.findByUsername(username);
-            FamilyModel family = familyMember.getMyFamily();
-            if (family != null) {
-                m.addAttribute("familyName", family.getFamilyName());
-
-                // Get the events for this family
-                List<EventModel> events = eventRepo.findByFamily(family);
-                m.addAttribute("events", events);
-            }
-        }
-        return "familyPage";
-    }
-
     @PostMapping("/requestFamilyAccess")
     public RedirectView requestFamilyAccess(@RequestParam Long familyId, Principal p) {
         FamilyModel requestedFamily = familiesRepo.findById(familyId).orElse(null);
@@ -253,5 +265,51 @@ public class MainController {
         }
         return new RedirectView("/admin"); // Redirect back to the admin page
     }
+
+    @PostMapping("/rsvp")
+    public RedirectView rsvpToEvent(@RequestParam Long eventId, Principal p) {
+        if (p != null) {
+            String username = p.getName();
+            FamilyMemberModel familyMember = familyMemberRepo.findByUsername(username);
+            EventModel event = eventRepo.findById(eventId).orElse(null);
+
+            if (event != null && familyMember != null) {
+                event.addFamilyMemberToEvent(familyMember);
+                eventRepo.save(event);
+            }
+        }
+        return new RedirectView("/familyPage"); // Redirect back to the family page
+    }
+
+    @PostMapping("/leaveFamily")
+    public RedirectView leaveFamily(Principal p) {
+        if (p != null) {
+            String username = p.getName();
+            FamilyMemberModel familyMember = familyMemberRepo.findByUsername(username);
+
+            if (familyMember != null) {
+                familyMember.setMyFamily(null);
+                familyMemberRepo.save(familyMember);
+            }
+        }
+        return new RedirectView("/myPage");
+    }
+
+    @PostMapping("/requestAdminStatus")
+    public RedirectView requestAdminStatus(Principal p) {
+        if (p != null) {
+            String username = p.getName();
+            FamilyMemberModel familyMember = familyMemberRepo.findByUsername(username);
+
+            if (familyMember != null) {
+                AdminRequestModel adminRequest = new AdminRequestModel();
+                adminRequest.setMemberId(familyMember.getMemberId());
+                adminRequest.setStatus("Pending");
+                adminRequestRepo.save(adminRequest);
+            }
+        }
+        return new RedirectView("/myPage"); // Redirect back to the My Page
+    }
+
 }
 
