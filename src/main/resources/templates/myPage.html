@@ -45,12 +45,15 @@
                         <a href="/admin" class="btn btn-warning">Admin Panel</a>
                     </div>
 
-                    <div th:if="${!user.isAdmin}">
+                    <div th:if="${!user.isAdmin && user.myFamily != null && adminRequestStatus == null}">
                         <form action="/requestAdminStatus" method="post">
                             <button type="submit" class="btn btn-info">Request Admin Status</button>
                         </form>
                     </div>
 
+                    <div th:if="${!user.isAdmin && user.myFamily != null && adminRequestStatus == 'Pending'}">
+                        <button class="btn btn-secondary" disabled="disabled">Pending</button>
+                    </div>
                 </div>
             </div>
         </div>

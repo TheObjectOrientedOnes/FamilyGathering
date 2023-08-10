@@ -13,18 +13,23 @@ public class RequestModel {
     public Long requestMemberId;
     public Long requestFamilyId;
     public boolean requestActive;
+    public String fName; // Added field
+    public String lName; // Added field
 
     public String status;
 
     public RequestModel() {
     }
 
-    public RequestModel(Long requestId, Long requestMemberId, Long requestFamilyId, boolean requestActive) {
+    public RequestModel(Long requestId, Long requestMemberId, Long requestFamilyId, boolean requestActive, String fName, String lName) {
         this.requestId = requestId;
         this.requestMemberId = requestMemberId;
         this.requestFamilyId = requestFamilyId;
         this.requestActive = requestActive;
         this.status = "Pending";
+        this.fName = fName;
+        this.lName = lName;
+
     }
 
     public String getStatus() {
@@ -67,6 +72,22 @@ public class RequestModel {
         this.requestActive = requestActive;
     }
 
+    public String getfName() {
+        return this.fName;
+    }
+
+    public void setfName(String fName) {
+        this.fName = fName;
+    }
+
+    public String getlName() {
+        return this.lName;
+    }
+
+    public void setlName(String lName) {
+        this.lName = lName;
+    }
+
     @Override
     public String toString() {
         return "RequestModel{" +
@@ -74,6 +95,9 @@ public class RequestModel {
                 ", requestMemberId=" + requestMemberId +
                 ", requestFamilyId=" + requestFamilyId +
                 ", requestActive=" + requestActive +
+                ", fName='" + fName + '\'' +
+                ", lName='" + lName + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }
