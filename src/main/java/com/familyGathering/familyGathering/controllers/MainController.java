@@ -3,7 +3,6 @@ package com.familyGathering.familyGathering.controllers;
 import com.familyGathering.familyGathering.models.*;
 import com.familyGathering.familyGathering.repos.*;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +42,9 @@ public class MainController {
     @Autowired
     HttpServletRequest request;
 
+    @Autowired
+    ImageRepo imageRepo;
+
     @GetMapping("/")
     String getHomePage() {
         return "splash.html";
@@ -64,6 +66,9 @@ public class MainController {
             String userName = p.getName();
             FamilyMemberModel familyMemberModel = familyMemberRepo.findByUsername(userName);
             List<FamilyModel> allFamilies = familiesRepo.findAll();
+
+//            FamilyMemberModel image = imageRepo.findByFamilyMemberModel(familyMemberModel);
+
             // Get the events the family member has RSVPed to
             Set<EventModel> rsvpEvents = familyMemberModel.getMyFamilyEvents();
             // Sort the events by date
@@ -73,6 +78,7 @@ public class MainController {
             RequestModel request = requestRepo.findByRequestMemberId(familyMemberModel.getMemberId());
             String requestStatus = (request != null) ? request.getStatus() : null;
             m.addAttribute("userName", userName);
+            m.addAttribute("userId",familyMemberModel.getMemberId());
             m.addAttribute("user", familyMemberModel);
             m.addAttribute("families", allFamilies);
             m.addAttribute("requestStatus", requestStatus);
