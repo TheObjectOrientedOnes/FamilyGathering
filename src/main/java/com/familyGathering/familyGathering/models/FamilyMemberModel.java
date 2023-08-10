@@ -50,17 +50,6 @@ public class FamilyMemberModel implements UserDetails {
     @ManyToMany(mappedBy = "eventAttendees")
     Set<EventModel> myFamilyEvents = new HashSet<>();
 
-    //Chat GPT Helper Methods
-//    public void addEvent(EventModel event) {
-//        myFamilyEvents.add(event);
-//        event.getEventAttendees().add(this);
-//    }
-//
-//    public void removeEvent(EventModel event) {
-//        myFamilyEvents.remove(event);
-//        event.getEventAttendees().remove(this);
-//    }
-
 
     //Generate Getters and Setters
 
