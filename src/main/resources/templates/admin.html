@@ -11,8 +11,11 @@
   <link rel="stylesheet" href="/css/admin.css"> 
   <title>Admin Page</title>
 </head>
-<body>
+
 <div th:replace="~{/fragments/header :: header}"></div>
+  
+<body class="body">
+
 <h3 th:text="${user.getfName}">Default second</h3>
 <h3 th:text="${user.getlName}">Default second</h3>
 <h3 th:text="${familyName}">Default Family Name</h3>
