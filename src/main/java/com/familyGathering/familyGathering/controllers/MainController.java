@@ -315,6 +315,8 @@ public class MainController {
             if (familyMember != null) {
                 AdminRequestModel adminRequest = new AdminRequestModel();
                 adminRequest.setMemberId(familyMember.getMemberId());
+                adminRequest.setfName(familyMember.getfName());
+                adminRequest.setlName(familyMember.getlName());
                 adminRequest.setStatus("Pending");
                 adminRequestRepo.save(adminRequest);
             }
