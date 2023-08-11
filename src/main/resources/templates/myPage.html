@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/myPage.css">
     <title>My Page</title>
 </head>
 <body>
@@ -85,27 +86,36 @@
         </div>
 
 
-        <a href="/createEvent" class="btn btn-primary">Add Event</a>
-        <h2>My RSVPed Events</h2>
-        <div th:each="event : ${rsvpEvents}">
-            <h4 th:text="${event.eventName}">Event Name</h4>
-            <p th:text="${event.dateOfEvent}">Event Date</p>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Event</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="familyMember : ${event.eventAttendees}">
-                    <td th:text="${familyMember.fName}"></td>
-                    <td th:text="${familyMember.lName}"></td>
-                    <td th:text="${event.eventName}"></td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="col-4">
+            <a href="/createEvent" class="btn btn-primary">Add Event</a>
+        </div>
+        <div class="confirmed-events-section">
+            <h2>Confirmed Events</h2>
+            <div th:each="event : ${rsvpEvents}" class="event-container">
+                <h4 th:text="${event.eventName}">Event Name</h4>
+                <p th:text="${event.dateOfEvent}">Event Date</p>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Event</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="familyMember : ${event.eventAttendees}">
+                        <td th:text="${familyMember.fName}"></td>
+                        <td th:text="${familyMember.lName}"></td>
+                        <td th:text="${event.eventName}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!-- Add a form for removing RSVP -->
+                <form th:action="@{/removeRsvp}" method="post">
+                    <input type="hidden" th:value="${event.eventId}" name="eventId"/>
+                    <button type="submit" name="removeRsvp" value="Remove" class="btn btn-danger">Remove</button>
+                </form>
+            </div>
         </div>
 
         <!-- Logout Button -->
