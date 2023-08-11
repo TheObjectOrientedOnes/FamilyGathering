@@ -10,23 +10,32 @@
     <title>Spring Boot Thymeleaf Application - Fragments</title>
 </head>
 
-<div th:fragment="header">
-
-
-    <div class="navbar navbar-expand-md navbar-dark bg-dark text-white">
-<!--        <div class="navLinks">-->
-            <a class="nav-link" href="/myPage">My Page</a>
-            <a class="nav-link" href="/familyPage">Family Page</a>
-            <a class="nav-link" href="/createEvent">Add Event</a>
-<!--        </div>-->
-    </div>
-
-    <!--  <div th:fragment="footer" class="footer">-->
-    <!--    &copy; FamilyGathering 2023-->
-    <!--  </div>-->
-</div>
 
 <body class="container">
+
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="d-flex align-items-center">
+            <img src="https://i.imgur.com/vh03PyK.png" alt="User's Photo"
+                 class="img-fluid rounded-circle mx-5 d-block" style="max-height: 3rem;"/>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav text-white">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/myPage">My Page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/familyPage">Family Page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/createEvent">Add Event</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+</div>
+
 </body>
 </html>
 </html>
