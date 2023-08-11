@@ -13,6 +13,8 @@ public class AdminRequestModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
     public Long memberId;
+
+    public Long familyId;
     public String status; // Pending, Approved, etc.
     public String fName;
     public String lName;
@@ -27,6 +29,15 @@ public class AdminRequestModel {
     }
 
     // Getters and Setters
+
+
+    public Long getFamilyId() {
+        return this.familyId;
+    }
+
+    public void setFamilyId(Long familyId) {
+        this.familyId = familyId;
+    }
 
     public String getfName() {
         return this.fName;

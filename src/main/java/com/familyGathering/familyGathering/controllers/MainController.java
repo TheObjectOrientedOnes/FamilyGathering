@@ -117,8 +117,8 @@ public class MainController {
                 // Filter family member access requests by the admin's family ID
                 List<RequestModel> familyAccessRequests = requestRepo.findAllByRequestFamilyId(adminFamilyId);
 
-                // Get all admin requests
-                List<AdminRequestModel> adminRequests = adminRequestRepo.findAll();
+                // Get all admin requests for the admin's family ID
+                List<AdminRequestModel> adminRequests = adminRequestRepo.findAllByFamilyId(adminFamilyId);
 
 
                 m.addAttribute("userName", userName);
@@ -326,12 +326,14 @@ public class MainController {
             String username = p.getName();
             FamilyMemberModel familyMember = familyMemberRepo.findByUsername(username);
 
-            if (familyMember != null) {
+            if (familyMember != null && familyMember.getMyFamily()!= null) {
                 AdminRequestModel adminRequest = new AdminRequestModel();
                 adminRequest.setMemberId(familyMember.getMemberId());
+                adminRequest.setFamilyId(familyMember.getMyFamily().getFamilyId());
                 adminRequest.setfName(familyMember.getfName());
                 adminRequest.setlName(familyMember.getlName());
                 adminRequest.setStatus("Pending");
+                adminRequest.setFamilyId(familyMember.getMyFamily().getFamilyId()); // Setting the family ID
                 adminRequestRepo.save(adminRequest);
             }
         }
