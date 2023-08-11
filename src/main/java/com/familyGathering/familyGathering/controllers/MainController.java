@@ -358,6 +358,21 @@ public class MainController {
         return new RedirectView("/admin"); // Redirect back to the admin page
     }
 
+    @PostMapping("/removeRsvp")
+    public RedirectView removeRsvp(@RequestParam long eventId, Principal p) {
+        if (p != null) {
+            String username = p.getName();
+            FamilyMemberModel familyMember = familyMemberRepo.findByUsername(username);
+            EventModel event = eventRepo.findById(eventId);
+
+            if (familyMember != null && event != null) {
+                event.removeFamilyMemberFromEvent(familyMember);
+                eventRepo.save(event); // Save the updated event
+            }
+        }
+        return new RedirectView("/myPage"); // Redirect back to the My Page
+    }
+
 
 }
 
