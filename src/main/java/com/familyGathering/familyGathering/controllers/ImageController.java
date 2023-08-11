@@ -76,6 +76,8 @@ public class ImageController {
         String userName = p.getName();
         FamilyMemberModel familyMemberModel = familyMemberRepo.findByUsername(userName);
         try {
+            familyMemberModel.setHasProfilePicture(true);
+            System.out.println("made it here");
             imageUploadService.uploadImage(file, familyMemberModel.getMemberId());
             return "redirect:/myPage";
         } catch (IOException e) {

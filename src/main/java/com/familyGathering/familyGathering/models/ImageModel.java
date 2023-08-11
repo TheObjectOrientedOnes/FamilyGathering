@@ -43,6 +43,10 @@ public class ImageModel {
         return this.familyMemberModel;
     }
 
+    Long getFamilyMemberModelId(){
+        return this.familyMemberModel.getMemberId();
+    }
+
     public void setFamilyMemberModel(FamilyMemberModel familyMemberModel) {
         this.familyMemberModel = familyMemberModel;
     }
