@@ -32,6 +32,7 @@
                 <p class="mb-2"><strong>Surname:</strong> <span th:text="${user.getSurname}">Default Surname</span></p>
                 <p class="mb-2"><strong>Age:</strong> <span th:text="${user.getAge}">Default Age</span></p>
 
+                <!-- Conditional Button for Admin -->
                 <div th:if="${user.isAdmin}">
                     <a href="/admin" class="btn btn-warning">Admin Panel</a>
                 </div>
@@ -41,13 +42,13 @@
                     </form>
                 </div>
                 <div th:if="${!user.isAdmin && user.myFamily != null && adminRequestStatus == 'Pending'}">
-                    <button class="btn btn-secondary" disabled="disabled">Pending</button>
+                    <button class="btn btn-secondary" disabled="disabled">Admin Request Pending</button>
                 </div>
             </div>
         </div>
 
 
-        <div th:if="${user.myFamily == null}">
+        <div th:if="${user.myFamily == null && requestStatus != 'Pending'}">
             <form action="/requestFamilyAccess" method="post" class="row mb-2">
                 <div class="col-sm-8">
                     <label for="familySelect" class="form-label">Select your family:</label>
@@ -57,15 +58,24 @@
                 </div>
                 <button type="submit" class="btn btn-primary mt-2">Request Family Page Access to Above Family</button>
             </form>
-
-            <form action="/createFamily" method="POST" class="row">
-                <div class="col-sm-12 d-flex flex-column align-items-start">
-                    <label for="familyName" class="form-label">Type the name of the family you wish to create:</label>
-                    <input type="text" id="familyName" name="familyName" class="form-control mb-2" required>
-                    <button type="submit" class="btn btn-secondary">Create A Family</button>
-                </div>
-            </form>
         </div>
+
+                <div th:if="${requestStatus != null}">
+                    <div th:if="${requestStatus == 'Pending'}">
+                        <button class="btn btn-warning" disabled>Family Request Pending</button>
+                    </div>
+                </div>
+
+
+        <div th:if="${user.myFamily == null && requestStatus != 'Pending'}">
+        <form action="/createFamily" method="POST" class="row">
+            <div class="col-sm-12 d-flex flex-column align-items-start">
+                <label for="familyName" class="form-label">Type the name of the family you wish to create:</label>
+                <input type="text" id="familyName" name="familyName" class="form-control mb-2" required>
+                <button type="submit" class="btn btn-secondary">Create A Family</button>
+            </div>
+        </form>
+    </div>
 
 
         <div th:if="${user.myFamily != null}">
@@ -74,7 +84,7 @@
             </form>
         </div>
 
-        >
+
         <a href="/createEvent" class="btn btn-primary">Add Event</a>
         <h2>My RSVPed Events</h2>
         <div th:each="event : ${rsvpEvents}">
