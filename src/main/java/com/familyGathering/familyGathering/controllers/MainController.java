@@ -77,6 +77,12 @@ public class MainController {
                     .collect(Collectors.toList());
             RequestModel request = requestRepo.findByRequestMemberId(familyMemberModel.getMemberId());
             String requestStatus = (request != null) ? request.getStatus() : null;
+
+            // Get the admin request status for this user
+            AdminRequestModel adminRequest = adminRequestRepo.findByMemberId(familyMemberModel.getMemberId());
+            String adminRequestStatus = (adminRequest != null) ? adminRequest.getStatus() : null;
+
+            m.addAttribute("adminRequestStatus", adminRequestStatus);
             m.addAttribute("userName", userName);
             m.addAttribute("userId",familyMemberModel.getMemberId());
             m.addAttribute("user", familyMemberModel);
@@ -108,15 +114,19 @@ public class MainController {
             if (familyMemberModel.isAdmin()) {
                 Long adminFamilyId = familyMemberModel.getMyFamily().getFamilyId(); // Get the admin's family ID
 
-                // Filter requests by the admin's family ID
-                List<RequestModel> requests = requestRepo.findAllByRequestFamilyId(adminFamilyId);
+                // Filter family member access requests by the admin's family ID
+                List<RequestModel> familyAccessRequests = requestRepo.findAllByRequestFamilyId(adminFamilyId);
+
+                // Get all admin requests
+                List<AdminRequestModel> adminRequests = adminRequestRepo.findAll();
 
 
                 m.addAttribute("userName", userName);
                 m.addAttribute("user", familyMemberModel);
                 m.addAttribute("familyName", familyMemberModel.getMyFamily().getFamilyName());
                 m.addAttribute("adminStatus", familyMemberModel.isAdmin());
-                m.addAttribute("requests", requests);
+                m.addAttribute("familyAccessRequests", familyAccessRequests);
+                m.addAttribute("adminRequests", adminRequests);
 
                 return "admin";
             }
@@ -124,6 +134,7 @@ public class MainController {
 
         return "redirect:/myPage";
     }
+
 
     @GetMapping("/family/{id}")
     String getFamilyPage(Principal p, Model m, @PathVariable Long id) {
@@ -174,18 +185,25 @@ public class MainController {
     //------------------Post Mappings Below---------------------------
 
     @PostMapping("/signup")
-    public RedirectView signUpFamilyMember(String email, String firstname, String lastname, String username, String password, String surname, String age) {
+    public String signUpFamilyMember(String email, String firstname, String lastname, String username, String password, String surname, String age, Model model) {
+        // Check if the username is already taken
+        FamilyMemberModel existingUser = familyMemberRepo.findByUsername(username);
+        if (existingUser != null) {
+            // Username is taken, return to the signup page with an error message
+            model.addAttribute("usernameError", "This username is already in use. Please create another.");
+            return "signup"; // Return the signup view
+        }
+
         FamilyMemberModel familyMemberModel = new FamilyMemberModel(firstname, lastname, surname, username, Integer.parseInt(age), email);
         String encryptedPassword = passwordEncoder.encode(password);
         familyMemberModel.setPassword(encryptedPassword);
         familyMemberRepo.save(familyMemberModel);
 
-//        System.out.println("@Post Mapping: "+ username+ " "+ password);
         authWithHttpServletRequest(username, password);
 
-
-        return new RedirectView("/myPage");
+        return "redirect:/myPage";
     }
+
 
 
     @PostMapping("/createFamily")
@@ -237,7 +255,7 @@ public class MainController {
             return new RedirectView("/error");
         }
 
-        RequestModel request = new RequestModel(null, familyMember.getMemberId(), familyId, true);
+        RequestModel request = new RequestModel(null, familyMember.getMemberId(), familyId, true, familyMember.getfName(), familyMember.getlName());
         request.setStatus("Pending");
         requestRepo.save(request);
 
@@ -311,12 +329,33 @@ public class MainController {
             if (familyMember != null) {
                 AdminRequestModel adminRequest = new AdminRequestModel();
                 adminRequest.setMemberId(familyMember.getMemberId());
+                adminRequest.setfName(familyMember.getfName());
+                adminRequest.setlName(familyMember.getlName());
                 adminRequest.setStatus("Pending");
                 adminRequestRepo.save(adminRequest);
             }
         }
         return new RedirectView("/myPage"); // Redirect back to the My Page
     }
+
+    @PostMapping("/approveAdminRequest")
+    public RedirectView approveAdminRequest(@RequestParam Long requestId) {
+        AdminRequestModel request = adminRequestRepo.findById(requestId).orElse(null);
+        if (request != null) {
+            Long memberId = request.getMemberId();
+            FamilyMemberModel member = familyMemberRepo.findById(memberId).orElse(null);
+
+            if (member != null) {
+                member.setAdmin(true); // Grant admin status to the member
+                familyMemberRepo.save(member);
+            }
+
+            request.setStatus("Approved"); // Update the request status to approved
+            adminRequestRepo.save(request);
+        }
+        return new RedirectView("/admin"); // Redirect back to the admin page
+    }
+
 
 }
 

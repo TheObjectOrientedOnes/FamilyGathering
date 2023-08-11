@@ -50,12 +50,15 @@
                         <a href="/admin" class="btn btn-warning">Admin Panel</a>
                     </div>
 
-                    <div th:if="${!user.isAdmin}">
+                    <div th:if="${!user.isAdmin && user.myFamily != null && adminRequestStatus == null}">
                         <form action="/requestAdminStatus" method="post">
                             <button type="submit" class="btn btn-info">Request Admin Status</button>
                         </form>
                     </div>
 
+                    <div th:if="${!user.isAdmin && user.myFamily != null && adminRequestStatus == 'Pending'}">
+                        <button class="btn btn-secondary" disabled="disabled">Pending</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -101,12 +104,28 @@
     <a href="/createEvent" class="btn btn-primary">Add Event</a>
 
     <h2>My RSVPed Events</h2>
-    <ul class="list-group">
-        <li class="list-group-item" th:each="event : ${rsvpEvents}">
-            <strong th:text="${event.eventName}">Event Name</strong>
-            <p th:text="${event.dateOfEvent}">Event Date</p>
-        </li>
-    </ul>
+    <div th:each="event : ${rsvpEvents}">
+        <h4 th:text="${event.eventName}">Event Name</h4>
+        <p th:text="${event.dateOfEvent}">Event Date</p>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Event</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="familyMember : ${event.eventAttendees}">
+                <td th:text="${familyMember.fName}"></td>
+                <td th:text="${familyMember.lName}"></td>
+                <td th:text="${event.eventName}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
 
 
     <div class="d-flex justify-content-between align-items-center">

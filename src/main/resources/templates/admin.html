@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/family.css">
+<!--     <link rel="stylesheet" href="/css/family.css"> -->
     <link rel="stylesheet" href="/css/admin.css">
     <title>Admin Page</title>
 </head>
@@ -21,37 +21,76 @@
 <h3 th:text="${familyName}">Default Family Name</h3>
 <h3 th:text="${adminStatus}">Default Family Name</h3>
 
-<h2>Access Requests</h2>
+<h2>Family Member Access Requests</h2>
 <table class="table">
-    <thead>
-    <tr>
-        <th>Request ID</th>
-        <th>Member ID</th>
-        <th>Family ID</th>
-        <th>Status</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="request : ${requests}">
-        <td th:text="${request.requestId}"></td>
-        <td th:text="${request.requestMemberId}"></td>
-        <td th:text="${request.requestFamilyId}"></td>
-        <td th:text="${request.status}"></td>
-        <td>
-            <div th:if="${request.status == 'Approved'}">
-                <button class="btn btn-success" disabled="disabled">Approved</button>
-            </div>
-            <div th:if="${request.status != 'Approved'}">
-                <form th:action="@{/approveRequest}" method="post" class="d-inline">
-                    <input type="hidden" th:value="${request.requestId}" name="requestId"/>
-                    <button type="submit" class="btn btn-primary">Approve</button>
-                </form>
-            </div>
-        </td>
-    </tr>
-    </tbody>
+
+  <thead>
+  <tr>
+    <th>Request ID</th>
+    <th>Member ID</th>
+    <th>Family ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="request : ${familyAccessRequests}">
+    <td th:text="${request.requestId}"></td>
+    <td th:text="${request.requestMemberId}"></td>
+    <td th:text="${request.requestFamilyId}"></td>
+    <td th:text="${request.fName}"></td>
+    <td th:text="${request.lName}"></td>
+    <td th:text="${request.status}"></td>
+    <td>
+      <div th:if="${request.status == 'Approved'}">
+        <button class="btn btn-success" disabled="disabled">Approved</button>
+      </div>
+      <div th:if="${request.status != 'Approved'}">
+        <form th:action="@{/approveRequest}" method="post" class="d-inline">
+          <input type="hidden" th:value="${request.requestId}" name="requestId"/>
+          <button type="submit" class="btn btn-primary">Approve</button>
+        </form>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+
 </table>
 
+<h2>Admin Requests</h2>
+<table class="table">
+  <thead>
+  <tr>
+    <th>Request ID</th>
+    <th>Member ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="adminRequest : ${adminRequests}">
+    <td th:text="${adminRequest.id}"></td>
+    <td th:text="${adminRequest.memberId}"></td>
+    <td th:text="${adminRequest.fName}"></td>
+    <td th:text="${adminRequest.lName}"></td>
+    <td th:text="${adminRequest.status}"></td>
+    <td>
+      <div th:if="${adminRequest.status == 'Approved'}">
+        <button class="btn btn-success" disabled="disabled">Approved</button>
+      </div>
+      <div th:if="${adminRequest.status != 'Approved'}">
+        <form th:action="@{/approveAdminRequest}" method="post" class="d-inline">
+          <input type="hidden" th:value="${adminRequest.id}" name="requestId"/>
+          <button type="submit" class="btn btn-primary">Approve</button>
+        </form>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
 </body>
 </html>
