@@ -23,14 +23,14 @@
 
     <div class="row mt-4">
 
-    <div class="col-md-4">
-        <img src="https://i.pinimg.com/1200x/23/60/5f/23605fe1526c0b7d2d11421022cec450.jpg" alt="User's Photo"
-             class="img-fluid rounded-circle"/>
-    </div>
-    <div class="col-md-4">
-        <img th:src="@{/image}" alt="User's Photo" class="img-fluid rounded-circle" />
-
-    </div>
+        <div class="col-md-4">
+            <!-- Check if user has a profile picture -->
+            <img th:if="${user.hasProfilePicture}" th:src="@{/image}" alt="User's Photo" class="img-fluid rounded-circle" />
+            <!-- If user doesn't have a profile picture -->
+            <img th:unless="${user.hasProfilePicture}" src="https://i.pinimg.com/1200x/23/60/5f/23605fe1526c0b7d2d11421022cec450.jpg" alt="User's Photo" class="img-fluid rounded-circle" />
+            <!-- Button to upload profile picture -->
+            <a th:href="@{/uploadImage}" class="btn btn-primary">Change Profile Picture</a>
+        </div>
 
 
         <div class="card mx-auto" style="max-width: 400px;">

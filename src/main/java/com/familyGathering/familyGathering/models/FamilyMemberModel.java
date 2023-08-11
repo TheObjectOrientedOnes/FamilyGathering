@@ -25,6 +25,8 @@ public class FamilyMemberModel implements UserDetails {
 
     protected boolean isAdmin;
 
+    protected boolean hasProfilePicture;
+
 
 
     //Generate Constructor
@@ -131,7 +133,13 @@ public class FamilyMemberModel implements UserDetails {
         this.myFamilyEvents = myFamilyEvents;
     }
 
+    public boolean hasProfilePicture() {
+        return this.hasProfilePicture;
+    }
 
+    public void setHasProfilePicture(boolean hasProfilePicture) {
+        this.hasProfilePicture = hasProfilePicture;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
