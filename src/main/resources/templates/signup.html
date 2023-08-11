@@ -25,6 +25,10 @@
             <div class="col-md-6 right">
                 <div class="input-box">
                     <header>Sign Up</header>
+
+                    <!-- Display username error if present -->
+                    <div th:if="${usernameError}" class="alert alert-danger" th:text="${usernameError}"></div>
+
                     <form action="/signup" method="POST">
                         <div class="input-field">
                             <input type="text" class="input" name="email" id="email" required>

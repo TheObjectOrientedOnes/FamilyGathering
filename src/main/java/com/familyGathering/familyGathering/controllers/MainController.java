@@ -185,18 +185,25 @@ public class MainController {
     //------------------Post Mappings Below---------------------------
 
     @PostMapping("/signup")
-    public RedirectView signUpFamilyMember(String email, String firstname, String lastname, String username, String password, String surname, String age) {
+    public String signUpFamilyMember(String email, String firstname, String lastname, String username, String password, String surname, String age, Model model) {
+        // Check if the username is already taken
+        FamilyMemberModel existingUser = familyMemberRepo.findByUsername(username);
+        if (existingUser != null) {
+            // Username is taken, return to the signup page with an error message
+            model.addAttribute("usernameError", "This username is already in use. Please create another.");
+            return "signup"; // Return the signup view
+        }
+
         FamilyMemberModel familyMemberModel = new FamilyMemberModel(firstname, lastname, surname, username, Integer.parseInt(age), email);
         String encryptedPassword = passwordEncoder.encode(password);
         familyMemberModel.setPassword(encryptedPassword);
         familyMemberRepo.save(familyMemberModel);
 
-//        System.out.println("@Post Mapping: "+ username+ " "+ password);
         authWithHttpServletRequest(username, password);
 
-
-        return new RedirectView("/myPage");
+        return "redirect:/myPage";
     }
+
 
 
     @PostMapping("/createFamily")
