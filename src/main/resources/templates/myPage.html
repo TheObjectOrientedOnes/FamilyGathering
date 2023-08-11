@@ -24,6 +24,7 @@
     <div class="row mt-4">
 
         <div class="col-md-4">
+
             <!-- Check if user has a profile picture -->
             <img th:if="${user.hasProfilePicture}" th:src="@{/image}" alt="User's Photo" class="img-fluid rounded-circle" />
             <!-- If user doesn't have a profile picture -->
@@ -133,5 +134,10 @@
     </div>
 
 </main>
+
+<div th:replace="~{/fragments/footer :: footer}"></div>
+
 </body>
+
+
 </html>
