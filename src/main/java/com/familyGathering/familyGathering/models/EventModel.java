@@ -56,7 +56,7 @@ public class EventModel {
         return added;
     }
 
-    boolean removeFamilyMemberFromEvent(FamilyMemberModel member){
+    public boolean removeFamilyMemberFromEvent(FamilyMemberModel member){
         if (member == null){
             return false;
         }

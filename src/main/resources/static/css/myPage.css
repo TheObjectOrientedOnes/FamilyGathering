@@ -1,37 +1,16 @@
- body {
-            font-family: 'Poppins', sans-serif;
-        }
-        .profile-container {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 20px;
-        }
-        .left-side {
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 10px;
-            position: relative;
-        }
-        .left-side::before {
-            /* Previously defined styles here */
-            background: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
-        }
-        .right-side {
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 10px;
-            position: relative;
-        }
-        .right-side::before {
-            /* Previously defined styles here */
-            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
-        }
-        .info-row {
-            display: flex;
-            align-items: center;
-            padding: 10px 0;
-        }
-        .info-icon {
-            margin-right: 10px;
-            color: #f093fb;
-        }
+.confirmed-events-section {
+  margin: 20px 0;
+}
+
+.event-container {
+  border: 1px solid #e0e0e0;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 10px 0;
+}
+
+.event-container h4 {
+  font-weight: bold;
+  color: #333;
+}

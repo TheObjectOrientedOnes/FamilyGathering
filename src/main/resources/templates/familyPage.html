@@ -21,9 +21,7 @@
 
     <div>
         <h1>Events:</h1>
-<!--        <h1>Family Member Details</h1>-->
-<!--        <h2>RSVP</h2>-->
-<!--        <h2>Past Events</h2>-->
+
         <ul class="list-group">
             <li class="list-group-item" th:each="event : ${events}">
                 <strong th:text="${event.eventName}">Event Name</strong>
